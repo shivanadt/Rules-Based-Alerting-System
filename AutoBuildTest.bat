@@ -1,1 +1,1 @@
-echo "Hello World!!"
+start /d "C:\Users\320050723\source\repos\Test\Debug" Test.exe
