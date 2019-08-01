@@ -6,13 +6,14 @@ using namespace rapidjson;
 
 namespace OutputClass
 {
-	class COutput
+	class Output
 	{
 	public:
-		static bool temperatureCheck(double tempTemperature);
-		static bool pulserateCheck(double tempPulseRate);
-		static bool spo2Check(double tempSpo2);
-		static int monitoringSystem(rapidjson::Document&, bool&);
+		static bool temperatureCheck(double);
+		static bool pulserateCheck(double);
+		static bool spo2Check(double);
+		static bool MonitoringSystem();
+		static rapidjson::Document bufferParsor();
 	};
 }
 

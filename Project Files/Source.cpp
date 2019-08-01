@@ -1,20 +1,21 @@
 #include<iostream>
-//#include<io.h>
+#include<io.h>
 #include<fstream>
 #include<string>
 #include<thread>
-//#include<Windows.h>
+#include<Windows.h>
 #include<chrono>
-//#include<time.h>
+#include<time.h>
 #include <random>
 #include<sstream>
 #include< document.h>
 #include<prettywriter.h>
-#include <Source.h>
+#include "Source.h"
 #include <mutex>
-#include <Input.h>
-#include <Output.h>
-#include <Source.h>
+#include "Input.h"
+#include "Output.h"
+#include "Source.h"
+#include<queue>
 
 
 
@@ -24,17 +25,15 @@ using namespace InputClass;
 using namespace OutputClass;
 
 std::mutex mtx;
-std::string str = "";
-std::string tempstr = "";
+queue<string> q;
 
 int main()
 {
-	thread t_start(CInput::InputGenerator);
-	Document document;
-	bool retflag;
-	int retval = COutput::monitoringSystem(document, retflag);
-	//int retval = output::monitoringSystem(document, retflag);
-	if (retflag) return retval;
+	
+	thread t2(Input::InputGenerator);
+	thread t1(Output::MonitoringSystem);
+	t1.join();
+	t2.join();
 }
 
 

@@ -10,10 +10,11 @@
 #include<sstream>
 #include< document.h>
 #include<prettywriter.h>
-#include <Source.h>
+#include<queue>
+#include "Source.h"
 #include <mutex>
-#include <Input.h>
-#include <Source.h>
+#include "Input.h"
+#include "Source.h"
 using namespace std;
 
 using namespace std;
@@ -21,11 +22,10 @@ using namespace InputClass;
 
 
 extern std::mutex mtx;
-extern std::string str;
-extern std::string tempstr;
+extern queue<string> q;
 
 
-void CInput::InputGenerator()
+void Input::InputGenerator()
 {
 	double SPO2;
 	double Pulse_rate;
@@ -33,24 +33,26 @@ void CInput::InputGenerator()
 	int i = 0;
 	while (true)
 	{
-
-		stringstream tempstr(str);
-		SPO2 = CInput::randSPO2();
-		Pulse_rate = CInput::randPulseRate();
-		Temperature = CInput::randTemperature();
-		tempstr << "{" << "\"Patient ID\"" << " : " << "\"WP1234\"" << " , " << "\"SPO2\"" << ": " << SPO2 << ", \"Pulse_rate\"" << ": " << Pulse_rate << ", \"Temperature\"" << " :" << Temperature << "}";
-		i++;
 		mtx.lock();
-		str = tempstr.str();
+		string str;
+		stringstream temp_str(str);
+		SPO2 = Input::randSPO2();
+		Pulse_rate = Input::randPulseRate();
+		Temperature = Input::randTemperature();
+		temp_str << "{" << "\"Patient ID\"" << " : " << "\"WP1234\"" << " , " << "\"SPO2\"" << ": " << SPO2 << ", \"Pulse_rate\"" << ": " << Pulse_rate << ", \"Temperature\"" << " :" << Temperature << "}";
+		i++;
+		
+		q.push(temp_str.str());
+		cout <<"Inside InputGenerator "<< q.front() << endl;
 		mtx.unlock();
-		this_thread::sleep_for(std::chrono::milliseconds(2000));
+		this_thread::sleep_for(std::chrono::milliseconds(10000));
 
 
 	}
 }
 
 
-string CInput::timeAndDate()
+string Input::TimeAndDate()
 {
 	char str[26];
 	time_t result = time(0);
@@ -66,7 +68,7 @@ string CInput::timeAndDate()
 	return temp_string;
 }
 
-double CInput::randSPO2()
+double Input::randSPO2()
 {
 	double lower_bound = 50;
 	double upper_bound = 105;
@@ -76,7 +78,7 @@ double CInput::randSPO2()
 	return a_random_double;
 }
 
-double CInput::randTemperature()
+double Input::randTemperature()
 {
 	double lower_bound = 95;
 	double upper_bound = 105;
@@ -86,7 +88,7 @@ double CInput::randTemperature()
 	return a_random_double;
 }
 
-double CInput::randPulseRate()
+double Input::randPulseRate()
 {
 	double lower_bound = 20;
 	double upper_bound = 250;

@@ -4,9 +4,10 @@
 
 namespace DefaultValues
 {
-	class constParameters
+	class ConstParameters
 	{
 	public:
+		const double spo2Max = 95;
 		const double spo2Min = 70;
 		const double pulserateMax = 220;
 		const double pulserateMin = 40;
@@ -16,4 +17,4 @@ namespace DefaultValues
 }
  
 
-int monitoringSystem(rapidjson::Document& document, bool& retflag);
+int MonitoringSystem(rapidjson::Document& document, bool& retflag);

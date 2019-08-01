@@ -3,13 +3,13 @@
 using namespace std;
 namespace InputClass
 {
-	class CInput
+	class Input
 	{
 	public:
 		static double randSPO2();
 		static double randPulseRate();
 		static double randTemperature();
-		static string timeAndDate();
+		static string TimeAndDate();
 		static void InputGenerator();
 	};
 }
